@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="24dp">
+
+    <!-- X Close Button -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✕"
+        android:textSize="20sp"
+        android:textColor="#444444"
+        android:gravity="end"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Tabs: Sign Up | Login -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <!-- Sign Up Tab -->
+        <TextView
+            android:id="@+id/tab_signup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sign Up"
+            android:textSize="16sp"
+            android:textColor="#AAAAAA"
+            android:gravity="center"
+            android:paddingBottom="8dp"/>
+
+        <!-- Login Tab (Active) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tab_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textSize="16sp"
+                android:textColor="#4CAF50"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"/>
+
+            <!-- Green underline for active tab -->
+            <View
+                android:layout_width="48dp"
+                android:layout_height="2dp"
+                android:background="#4CAF50"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Email Address -->
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/edit_text_border"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Password -->
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_border"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp"
+        android:drawableEnd="@android:drawable/ic_menu_view"/>
+
+    <!-- LOG IN Button -->
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="LOG IN"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Forgot Password -->
+    <TextView
+        android:id="@+id/text_forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FORGOT PASSWORD?"
+        android:textColor="#4CAF50"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Or login with -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Or, login with"
+        android:textSize="13sp"
+        android:textColor="#888888"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Facebook + Google Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Facebook -->
+        <Button
+            android:id="@+id/button_facebook"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="  Facebook"
+            android:textColor="#1877F2"
+            android:textSize="13sp"
+            android:backgroundTint="#FFFFFF"
+            android:drawableStart="@android:drawable/ic_dialog_info"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Google -->
+        <Button
+            android:id="@+id/button_google"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="  Google"
+            android:textColor="#444444"
+            android:textSize="13sp"
+            android:backgroundTint="#FFFFFF"/>
+
+    </LinearLayout>
+
+</LinearLayout>
