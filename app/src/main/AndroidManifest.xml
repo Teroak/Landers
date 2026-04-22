@@ -32,6 +32,7 @@
         <activity android:name=".ChangePasswordActivity"/>
         <activity android:name=".OrdersActivity"/>
         <activity android:name=".CategoriesActivity"/>
+        <activity android:name=".HomeActivity"/>
 
     </application>
 

@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
                     // e.g. "juandelacruz@gmail.com" → "juandelacruz"
                     val name = email.substringBefore("@")
 
-                    val intent = Intent(this, ProfileActivity::class.java)
+                    val intent = Intent(this, HomeActivity::class.java)
                     intent.putExtra("USER_EMAIL", email)
                     intent.putExtra("USER_NAME", name)
                     startActivity(intent)

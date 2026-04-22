@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">GenericApp</string>
+    <string name="hint_search_ice_cream">Ice Cream</string>
+    <string name="delivery_location_placeholder">Enter your Delivery Location</string>
+    <string name="brand_landers">LANDERS</string>
+    <string name="landers_desc">More than 10,000 NEW Marketplace items, only at Landers.ph</string>
+    <string name="shop_now">SHOP NOW</string>
+    <string name="brand_logos_text">Celluver  🍎  Mary Ruth\'s  PLATINUM  GOURMET</string>
+    <string name="ice_cream_festival">ICE CREAM FESTIVAL</string>
+    <string name="festival_dates">MARCH 25 - MAY 10, 2026</string>
+    <string name="see_all">See All</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_orders">Orders</string>
+    <string name="nav_categories">Categories</string>
+    <string name="nav_member">Be A Member</string>
+    <string name="nav_account">Account</string>
 </resources>
