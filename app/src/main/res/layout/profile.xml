@@ -591,10 +591,11 @@
             android:layout_height="60dp"
             android:background="#FFFFFF"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:elevation="8dp">
 
             <!-- Home -->
             <LinearLayout
+                android:id="@+id/nav_home"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -618,6 +619,7 @@
 
             <!-- Orders -->
             <LinearLayout
+                android:id="@+id/nav_orders"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -641,6 +643,7 @@
 
             <!-- Categories -->
             <LinearLayout
+                android:id="@+id/nav_categories"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -664,6 +667,7 @@
 
             <!-- Be A Member -->
             <LinearLayout
+                android:id="@+id/nav_member"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -687,7 +691,7 @@
 
             <!-- Account (Active) -->
             <LinearLayout
-                android:id="@+id/button_edit_profile"
+                android:id="@+id/nav_account"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

@@ -31,5 +31,22 @@ class ProfileActivity : AppCompatActivity() {
                     Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+
+        // Navigation logic
+        findViewById<LinearLayout>(R.id.nav_home)?.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.nav_orders)?.setOnClickListener {
+            startActivity(Intent(this, OrdersActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.nav_categories)?.setOnClickListener {
+            startActivity(Intent(this, CategoriesActivity::class.java))
+        }
+
+        findViewById<LinearLayout>(R.id.nav_account)?.setOnClickListener {
+            // Already in Account
+        }
     }
 }

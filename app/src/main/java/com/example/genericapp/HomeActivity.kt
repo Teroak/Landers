@@ -12,6 +12,10 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         // Navigation logic
+        findViewById<LinearLayout>(R.id.nav_home)?.setOnClickListener {
+            // Already in Home
+        }
+
         findViewById<LinearLayout>(R.id.nav_orders)?.setOnClickListener {
             startActivity(Intent(this, OrdersActivity::class.java))
         }

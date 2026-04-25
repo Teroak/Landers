@@ -12,7 +12,12 @@ class OrdersActivity : AppCompatActivity() {
 
         // Home
         findViewById<LinearLayout>(R.id.nav_home).setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
+        // Orders
+        findViewById<LinearLayout>(R.id.nav_orders).setOnClickListener {
+            // Already in Orders
         }
 
         // Categories
