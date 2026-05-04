@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GenericApp"
+rootProject.name = "LandersSuperstore"
 include(":app")
  

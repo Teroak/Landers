@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_large">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:background="@color/primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_xlarge"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/margin_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintTop_toTopOf="@id/header" />
+
+        <TextView
+            android:id="@+id/labelFirstName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="First Name *"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <EditText
+            android:id="@+id/editFirstName"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_small"
+            android:hint="Enter first name"
+            android:inputType="textPersonName"
+            android:background="@drawable/edit_text_border"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingEnd="@dimen/padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/labelFirstName"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <TextView
+            android:id="@+id/labelLastName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="Last Name *"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/editFirstName"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <EditText
+            android:id="@+id/editLastName"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_small"
+            android:hint="Enter last name"
+            android:inputType="textPersonName"
+            android:background="@drawable/edit_text_border"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingEnd="@dimen/padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/labelLastName"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <TextView
+            android:id="@+id/labelEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="Email Address *"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/editLastName"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_small"
+            android:hint="Enter email address"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edit_text_border"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingEnd="@dimen/padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/labelEmail"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <TextView
+            android:id="@+id/labelMobile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="Mobile Number *"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/editEmail"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <EditText
+            android:id="@+id/editMobile"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_small"
+            android:hint="+63"
+            android:inputType="phone"
+            android:background="@drawable/edit_text_border"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingEnd="@dimen/padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/labelMobile"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <TextView
+            android:id="@+id/labelPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="Password *"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/editMobile"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_small"
+            android:hint="Create a password"
+            android:inputType="textPassword"
+            android:background="@drawable/edit_text_border"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingEnd="@dimen/padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/labelPassword"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <TextView
+            android:id="@+id/labelConfirmPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="Confirm Password *"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/editPassword"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <EditText
+            android:id="@+id/editConfirmPassword"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_small"
+            android:hint="Re-enter your password"
+            android:inputType="textPassword"
+            android:background="@drawable/edit_text_border"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingEnd="@dimen/padding_medium"
+            app:layout_constraintTop_toBottomOf="@id/labelConfirmPassword"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <CheckBox
+            android:id="@+id/checkboxTerms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/terms_agree"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintTop_toBottomOf="@id/editConfirmPassword"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/create_account"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/checkboxTerms"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <TextView
+            android:id="@+id/textLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/already_have_account"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/buttonRegister"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
