@@ -24,7 +24,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             return
         }
 
-        binding.textEmoji.text = product.imageEmoji
+        binding.textEmoji.setImageResource(product.imageRes)
         binding.textName.text = product.name
         binding.textPrice.text = "₱%,.2f".format(product.price)
         if (product.originalPrice != null) {

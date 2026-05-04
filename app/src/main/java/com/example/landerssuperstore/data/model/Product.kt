@@ -11,7 +11,7 @@ data class Product(
     val originalPrice: Double? = null,
     val description: String,
     val category: String,
-    val imageEmoji: String,
+    val imageRes: Int,
     val discount: String? = null,
     val rating: Float = 4.5f,
     val reviewCount: Int = 100

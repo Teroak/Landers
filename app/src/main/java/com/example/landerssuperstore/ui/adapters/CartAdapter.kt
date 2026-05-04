@@ -32,7 +32,7 @@ class CartAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CartItem) {
-            binding.textEmoji.text = item.product.imageEmoji
+            binding.textEmoji.setImageResource(item.product.imageRes)
             binding.textProductName.text = item.product.name
             binding.textPrice.text = "₱%,.2f".format(item.product.price)
             binding.textQuantity.text = item.quantity.toString()

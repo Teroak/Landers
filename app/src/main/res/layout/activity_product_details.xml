@@ -24,13 +24,12 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/textEmoji"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
                 android:background="@color/white"
-                android:gravity="center"
-                android:textSize="120sp"
+                android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

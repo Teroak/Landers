@@ -27,7 +27,7 @@ class ProductAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product) {
-            binding.textEmoji.text = product.imageEmoji
+            binding.textEmoji.setImageResource(product.imageRes)
             binding.textProductName.text = product.name
             binding.textPrice.text = "₱%,.2f".format(product.price)
             binding.textDiscount.visibility = if (product.discount != null) {

@@ -12,12 +12,11 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_medium">
 
-        <TextView
+        <ImageView
             android:id="@+id/textEmoji"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:gravity="center"
-            android:textSize="40sp"
+            android:scaleType="centerCrop"
             android:background="@color/gray_light"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
