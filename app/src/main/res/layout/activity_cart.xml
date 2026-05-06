@@ -77,14 +77,94 @@
             android:padding="@dimen/padding_medium"
             android:background="@color/white">
 
+            <!-- Voucher Section -->
+            <EditText
+                android:id="@+id/editVoucher"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:hint="Promo Code"
+                android:background="@drawable/edit_text_border"
+                android:paddingStart="@dimen/padding_small"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/buttonApplyVoucher" />
+
+            <Button
+                android:id="@+id/buttonApplyVoucher"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Apply"
+                android:textColor="@color/primary"
+                app:layout_constraintTop_toTopOf="@id/editVoucher"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Payment Method -->
+            <TextView
+                android:id="@+id/labelPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="Payment Method:"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toBottomOf="@id/editVoucher"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupPayment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/labelPayment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <RadioButton android:id="@+id/radioCash" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cash" android:textSize="@dimen/text_small" android:checked="true" />
+                <RadioButton android:id="@+id/radioCard" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Card" android:textSize="@dimen/text_small" />
+                <RadioButton android:id="@+id/radioGCash" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GCash" android:textSize="@dimen/text_small" />
+            </RadioGroup>
+
+            <!-- Delivery Method -->
+            <TextView
+                android:id="@+id/labelDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="Delivery Method:"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toBottomOf="@id/radioGroupPayment"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupDelivery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/labelDelivery"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <RadioButton android:id="@+id/radioStandard" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Standard" android:textSize="@dimen/text_small" android:checked="true" />
+                <RadioButton android:id="@+id/radioSameDay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Same-Day" android:textSize="@dimen/text_small" />
+                <RadioButton android:id="@+id/radioPickup" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pickup" android:textSize="@dimen/text_small" />
+            </RadioGroup>
+
+            <View
+                android:id="@+id/totalDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@id/radioGroupDelivery" />
+
             <TextView
                 android:id="@+id/labelTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/total"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_large"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalDivider"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
@@ -94,8 +174,9 @@
                 android:text="₱0.00"
                 android:textColor="@color/accent"
                 android:textStyle="bold"
-                android:textSize="@dimen/text_xxlarge"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="@dimen/text_xlarge"
+                app:layout_constraintTop_toTopOf="@id/labelTotal"
+                app:layout_constraintBottom_toBottomOf="@id/labelTotal"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button

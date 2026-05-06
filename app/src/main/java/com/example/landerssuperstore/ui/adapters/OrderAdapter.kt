@@ -7,7 +7,8 @@ import com.example.landerssuperstore.data.model.Order
 import com.example.landerssuperstore.databinding.ItemOrderBinding
 
 class OrderAdapter(
-    private var orders: List<Order>
+    private var orders: List<Order>,
+    private val onOrderClick: (Order) -> Unit
 ) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     fun updateList(newOrders: List<Order>) {
@@ -30,11 +31,13 @@ class OrderAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(order: Order) {
-            binding.textOrderId.text = order.id
+            binding.textOrderId.text = "Order #${order.id.takeLast(6)}"
             binding.textDate.text = order.date
             binding.textStatus.text = order.status
             binding.textItemCount.text = "${order.items.size} item(s)"
             binding.textTotal.text = "₱%,.2f".format(order.total)
+            
+            binding.root.setOnClickListener { onOrderClick(order) }
         }
     }
 }

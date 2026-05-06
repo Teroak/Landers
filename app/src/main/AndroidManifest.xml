@@ -27,6 +27,7 @@
         <activity android:name=".ui.productlist.ProductListActivity"/>
         <activity android:name=".ui.productdetails.ProductDetailsActivity"/>
         <activity android:name=".ui.cart.CartActivity"/>
+        <activity android:name=".ui.orders.OrderDetailsActivity"/>
         <activity android:name=".ui.search.SearchActivity"/>
         <activity android:name=".ui.account.EditProfileActivity"/>
         <activity android:name=".ui.account.ChangePasswordActivity"/>

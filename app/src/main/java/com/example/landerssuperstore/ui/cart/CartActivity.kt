@@ -15,11 +15,15 @@ import com.example.landerssuperstore.utils.CartManager
 import com.example.landerssuperstore.utils.OrderManager
 import com.example.landerssuperstore.utils.MembershipManager
 import com.example.landerssuperstore.utils.AddressManager
+import com.example.landerssuperstore.utils.BranchManager
+import com.example.landerssuperstore.data.model.Voucher
+import com.example.landerssuperstore.data.repository.VoucherRepository
 
 class CartActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCartBinding
     private lateinit var cartAdapter: CartAdapter
+    private var appliedVoucher: Voucher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,35 @@ class CartActivity : AppCompatActivity() {
             updateMembershipStatus()
         }
 
+        binding.radioGroupDelivery.setOnCheckedChangeListener { _, _ ->
+            updateMembershipStatus()
+        }
+
+        binding.buttonApplyVoucher.setOnClickListener {
+            val code = binding.editVoucher.text.toString().trim()
+            if (code.isEmpty()) {
+                appliedVoucher = null
+                updateMembershipStatus()
+                return@setOnClickListener
+            }
+            
+            val voucher = VoucherRepository.getVoucher(code)
+            if (voucher != null) {
+                val subtotal = CartManager.cartTotal.value ?: 0.0
+                if (subtotal >= voucher.minOrderAmount) {
+                    appliedVoucher = voucher
+                    Toast.makeText(this, "Voucher Applied!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Min order for this voucher is ₱${voucher.minOrderAmount}", Toast.LENGTH_SHORT).show()
+                    appliedVoucher = null
+                }
+            } else {
+                Toast.makeText(this, "Invalid Voucher Code", Toast.LENGTH_SHORT).show()
+                appliedVoucher = null
+            }
+            updateMembershipStatus()
+        }
+
         binding.buttonCheckout.setOnClickListener {
             val items = CartManager.cartItems.value
             if (items.isNullOrEmpty()) {
@@ -70,7 +103,7 @@ class CartActivity : AppCompatActivity() {
                 intent.putExtra("NAVIGATE_TO_MEMBERSHIP", true)
                 startActivity(intent)
                 finish()
-            } else if (!AddressManager.hasAddress()) {
+            } else if (!AddressManager.hasAddress() && binding.radioPickup.isChecked.not()) {
                 showAddressDialog()
             } else {
                 processCheckout()
@@ -114,22 +147,83 @@ class CartActivity : AppCompatActivity() {
 
     private fun processCheckout() {
         val items = CartManager.cartItems.value ?: return
-        val total = CartManager.cartTotal.value ?: 0.0
-        OrderManager.addOrder(items.toList(), total)
-        Toast.makeText(this, "Order placed successfully! Delivering to: ${AddressManager.getAddress()}", Toast.LENGTH_LONG).show()
+        val subtotal = CartManager.cartTotal.value ?: 0.0
+        
+        val deliveryFee = when {
+            binding.radioSameDay.isChecked -> 99.0
+            binding.radioStandard.isChecked -> 49.0
+            else -> 0.0
+        }
+        
+        var discountAmount = 0.0
+        appliedVoucher?.let {
+            discountAmount = if (it.discountType == "Percentage") {
+                subtotal * (it.discountValue / 100.0)
+            } else {
+                it.discountValue
+            }
+        }
+        
+        val total = subtotal + deliveryFee - discountAmount
+        
+        val paymentMethod = when {
+            binding.radioGCash.isChecked -> "GCash"
+            binding.radioCard.isChecked -> "Card"
+            else -> "Cash"
+        }
+        
+        val deliveryMethod = when {
+            binding.radioSameDay.isChecked -> "Same-Day"
+            binding.radioPickup.isChecked -> "Pickup"
+            else -> "Standard"
+        }
+        
+        val branch = BranchManager.selectedBranch.value?.name ?: "Landers Otis"
+        val address = if (deliveryMethod == "Pickup") "Pickup at $branch" else AddressManager.getAddress() ?: ""
+
+        OrderManager.addOrder(
+            items = items.toList(),
+            subtotal = subtotal,
+            deliveryFee = deliveryFee,
+            discountAmount = discountAmount,
+            total = total,
+            paymentMethod = paymentMethod,
+            deliveryMethod = deliveryMethod,
+            branchName = branch,
+            address = address,
+            voucherCode = appliedVoucher?.code
+        )
+        
+        Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_LONG).show()
         CartManager.clearCart()
         finish()
     }
 
     private fun updateMembershipStatus() {
+        val subtotal = CartManager.cartTotal.value ?: 0.0
         val isMember = MembershipManager.isUserMember()
         
+        val deliveryFee = when {
+            binding.radioSameDay.isChecked -> 99.0
+            binding.radioStandard.isChecked -> 49.0
+            else -> 0.0
+        }
+        
+        var discountAmount = 0.0
+        appliedVoucher?.let {
+            discountAmount = if (it.discountType == "Percentage") {
+                subtotal * (it.discountValue / 100.0)
+            } else {
+                it.discountValue
+            }
+        }
+        
+        val finalTotal = subtotal + deliveryFee - discountAmount
+        
         if (isMember) {
-            // Add visual indicator in cart UI
-            // For example, show a membership badge or change text color
-            binding.textTotal.text = "₱%,.2f (Member Price)".format(CartManager.cartTotal.value ?: 0.0)
+            binding.textTotal.text = "₱%,.2f (Member Price)".format(finalTotal)
         } else {
-            binding.textTotal.text = "₱%,.2f".format(CartManager.cartTotal.value ?: 0.0)
+            binding.textTotal.text = "₱%,.2f".format(finalTotal)
         }
     }
 }

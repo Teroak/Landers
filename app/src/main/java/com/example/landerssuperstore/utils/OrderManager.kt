@@ -13,14 +13,34 @@ object OrderManager {
     private val _orders = MutableLiveData<MutableList<Order>>(mutableListOf())
     val orders: LiveData<MutableList<Order>> = _orders
 
-    fun addOrder(items: List<CartItem>, total: Double) {
+    fun addOrder(
+        items: List<CartItem>,
+        subtotal: Double,
+        deliveryFee: Double,
+        discountAmount: Double,
+        total: Double,
+        paymentMethod: String,
+        deliveryMethod: String,
+        branchName: String,
+        address: String,
+        voucherCode: String?
+    ) {
         val currentList = _orders.value ?: mutableListOf()
         val order = Order(
             id = "ORD-${System.currentTimeMillis()}",
             items = items.toList(),
+            subtotal = subtotal,
+            deliveryFee = deliveryFee,
+            discountAmount = discountAmount,
             total = total,
-            date = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date()),
-            status = "Pending"
+            date = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault()).format(Date()),
+            status = "Pending",
+            paymentMethod = paymentMethod,
+            deliveryMethod = deliveryMethod,
+            branchName = branchName,
+            deliveryAddress = address,
+            voucherCode = voucherCode,
+            assignedRider = if (deliveryMethod != "Pickup") "To be assigned" else null
         )
         currentList.add(0, order)
         _orders.value = currentList
@@ -36,6 +56,13 @@ object OrderManager {
         val order = currentList.find { it.id == orderId }
         if (order != null) {
             order.status = newStatus
+            // Simulate assigning a rider when status changes to Processing/Out for Delivery
+            if ((newStatus == "Processing" || newStatus == "Out for Delivery") && 
+                order.deliveryMethod != "Pickup" && 
+                (order.assignedRider == null || order.assignedRider == "To be assigned")) {
+                val riders = listOf("Mark Anthony", "John Lloyd", "Ricardo Dalisay", "Dingdong Dantes")
+                order.assignedRider = riders.random()
+            }
             _orders.value = currentList
         }
     }

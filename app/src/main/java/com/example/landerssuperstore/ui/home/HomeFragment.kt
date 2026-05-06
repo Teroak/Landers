@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.landerssuperstore.data.model.Product
 import com.example.landerssuperstore.data.repository.ProductRepository
 import com.example.landerssuperstore.databinding.FragmentHomeBinding
-import com.example.landerssuperstore.ui.adapters.CategoryAdapter
 import com.example.landerssuperstore.ui.adapters.ProductAdapter
-import com.example.landerssuperstore.ui.cart.CartActivity
-import com.example.landerssuperstore.ui.categories.CategoriesFragment
 import com.example.landerssuperstore.ui.productdetails.ProductDetailsActivity
 import com.example.landerssuperstore.ui.productlist.ProductListActivity
 import com.example.landerssuperstore.ui.search.SearchActivity
 import com.example.landerssuperstore.utils.CartManager
+import com.example.landerssuperstore.utils.BranchManager
+import androidx.appcompat.app.AlertDialog
 
 class HomeFragment : Fragment() {
 
@@ -49,13 +48,13 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        // Initialize categories section
-        val categories = ProductRepository.getCategories()
-        binding.recyclerCategories.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerCategories.adapter = CategoryAdapter(categories) { category ->
-            val intent = Intent(requireContext(), ProductListActivity::class.java)
-            intent.putExtra("CATEGORY_NAME", category.name)
-            startActivity(intent)
+        // Branch Selection
+        BranchManager.selectedBranch.observe(viewLifecycleOwner) { branch ->
+            binding.textSelectedBranch.text = "Shopping at: ${branch.name}"
+        }
+
+        binding.textSelectedBranch.setOnClickListener {
+            showBranchDialog()
         }
 
         val featuredProducts = ProductRepository.getFeaturedProducts()
@@ -76,6 +75,22 @@ class HomeFragment : Fragment() {
     private fun onAddToCart(product: Product) {
         CartManager.addToCart(product)
         Toast.makeText(requireContext(), "${product.name} added to cart", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showBranchDialog() {
+        val branches = BranchManager.getBranches()
+        val branchNames = branches.map { it.name }.toTypedArray()
+        val currentBranch = BranchManager.selectedBranch.value
+        val checkedItem = branches.indexOf(currentBranch)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Select Store")
+            .setSingleChoiceItems(branchNames, checkedItem) { dialog, which ->
+                BranchManager.selectBranch(branches[which])
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     override fun onDestroyView() {

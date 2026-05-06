@@ -30,6 +30,10 @@ class CategoriesFragment : Fragment() {
             startActivity(Intent(requireContext(), SearchActivity::class.java))
         }
 
+        binding.buttonCart.setOnClickListener {
+            startActivity(Intent(requireContext(), com.example.landerssuperstore.ui.cart.CartActivity::class.java))
+        }
+
         val categories = ProductRepository.getCategories()
         binding.recyclerCategories.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerCategories.adapter = CategoryAdapter(categories) { category ->

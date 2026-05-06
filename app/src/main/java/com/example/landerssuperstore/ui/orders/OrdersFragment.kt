@@ -30,7 +30,11 @@ class OrdersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        orderAdapter = OrderAdapter(emptyList())
+        orderAdapter = OrderAdapter(emptyList()) { order ->
+            val intent = Intent(requireContext(), OrderDetailsActivity::class.java)
+            intent.putExtra("ORDER", order)
+            startActivity(intent)
+        }
         binding.recyclerOrders.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerOrders.adapter = orderAdapter
 
