@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.landerssuperstore.databinding.ActivityRegisterBinding
 import com.example.landerssuperstore.ui.login.LoginActivity
+import com.example.landerssuperstore.utils.MembershipManager
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -36,6 +37,8 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 else -> {
                     Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show()
+                    // Set user as member upon successful registration
+                    MembershipManager.setMembershipStatus(true)
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 }

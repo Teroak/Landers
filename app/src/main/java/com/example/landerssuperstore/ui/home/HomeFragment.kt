@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.landerssuperstore.data.model.Product
 import com.example.landerssuperstore.data.repository.ProductRepository
 import com.example.landerssuperstore.databinding.FragmentHomeBinding
+import com.example.landerssuperstore.ui.adapters.CategoryAdapter
 import com.example.landerssuperstore.ui.adapters.ProductAdapter
+import com.example.landerssuperstore.ui.cart.CartActivity
+import com.example.landerssuperstore.ui.categories.CategoriesFragment
 import com.example.landerssuperstore.ui.productdetails.ProductDetailsActivity
+import com.example.landerssuperstore.ui.productlist.ProductListActivity
 import com.example.landerssuperstore.ui.search.SearchActivity
 import com.example.landerssuperstore.utils.CartManager
 
@@ -33,9 +37,24 @@ class HomeFragment : Fragment() {
             startActivity(Intent(requireContext(), SearchActivity::class.java))
         }
 
+        binding.buttonCart.setOnClickListener {
+            // Navigate to cart activity
+            val intent = Intent(requireContext(), com.example.landerssuperstore.ui.cart.CartActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.buttonShopNow.setOnClickListener {
             val intent = Intent(requireContext(), com.example.landerssuperstore.ui.productlist.ProductListActivity::class.java)
             intent.putExtra("CATEGORY_NAME", "NEW! Marketplace")
+            startActivity(intent)
+        }
+
+        // Initialize categories section
+        val categories = ProductRepository.getCategories()
+        binding.recyclerCategories.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerCategories.adapter = CategoryAdapter(categories) { category ->
+            val intent = Intent(requireContext(), ProductListActivity::class.java)
+            intent.putExtra("CATEGORY_NAME", category.name)
             startActivity(intent)
         }
 

@@ -10,6 +10,8 @@ import com.example.landerssuperstore.ui.home.HomeFragment
 import com.example.landerssuperstore.ui.categories.CategoriesFragment
 import com.example.landerssuperstore.ui.orders.OrdersFragment
 import com.example.landerssuperstore.ui.account.AccountFragment
+import com.example.landerssuperstore.ui.bea_member.BeaMemberFragment
+import com.example.landerssuperstore.utils.MembershipManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,22 +24,26 @@ class MainActivity : AppCompatActivity() {
 
         val userName = intent.getStringExtra("USER_NAME") ?: "User"
         val userEmail = intent.getStringExtra("USER_EMAIL") ?: "user@landers.ph"
+        val navigateToMembership = intent.getBooleanExtra("NAVIGATE_TO_MEMBERSHIP", false)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, HomeFragment())
-                .commit()
+            if (navigateToMembership) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, BeaMemberFragment())
+                    .commit()
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, HomeFragment())
+                    .commit()
+            }
         }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             val fragment = when (item.itemId) {
                 R.id.nav_home -> HomeFragment()
-                R.id.nav_categories -> CategoriesFragment()
-                R.id.nav_cart -> {
-                    startActivity(Intent(this, CartActivity::class.java))
-                    return@setOnItemSelectedListener false
-                }
                 R.id.nav_orders -> OrdersFragment()
+                R.id.nav_categories -> CategoriesFragment()
+                R.id.nav_bea_member -> BeaMemberFragment()
                 R.id.nav_account -> AccountFragment.newInstance(userName, userEmail)
                 else -> HomeFragment()
             }
@@ -45,6 +51,18 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, fragment)
                 .commit()
             true
+        }
+        
+        // Update membership status in bottom navigation
+        updateMembershipStatus()
+    }
+
+    private fun updateMembershipStatus() {
+        val isMember = MembershipManager.isUserMember()
+        
+        if (isMember) {
+            // Update bottom navigation item text or icon
+            // For now, we'll just ensure the correct fragment is loaded
         }
     }
 }

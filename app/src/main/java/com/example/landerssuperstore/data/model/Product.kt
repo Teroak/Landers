@@ -11,8 +11,10 @@ data class Product(
     val originalPrice: Double? = null,
     val description: String,
     val category: String,
-    val imageRes: Int,
+    val imageRes: String,
     val discount: String? = null,
     val rating: Float = 4.5f,
-    val reviewCount: Int = 100
+    val reviewCount: Int = 100,
+    val brand: String? = null,
+    var stockQty: Int = 10
 ) : Parcelable

@@ -9,5 +9,5 @@ data class Order(
     val items: List<CartItem>,
     val total: Double,
     val date: String,
-    val status: String
+    var status: String
 ) : Parcelable

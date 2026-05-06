@@ -2,10 +2,13 @@ package com.example.landerssuperstore.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.landerssuperstore.databinding.ActivityLoginBinding
 import com.example.landerssuperstore.ui.MainActivity
+import com.example.landerssuperstore.ui.admin.AdminDashboardActivity
+import com.example.landerssuperstore.ui.admin.AdminLoginActivity
 import com.example.landerssuperstore.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -43,6 +46,13 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+        }
+
+        // Add long press listener for admin dashboard access
+        binding.textOrLogin.setOnLongClickListener {
+            val intent = Intent(this, AdminLoginActivity::class.java)
+            startActivity(intent)
+            true // Return true to indicate the event is consumed
         }
 
         binding.textForgotPassword.setOnClickListener {

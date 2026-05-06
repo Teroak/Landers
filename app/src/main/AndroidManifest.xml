@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.MainActivity" android:exported="true"/>
         <activity android:name=".ui.register.RegisterActivity"/>
         <activity android:name=".ui.productlist.ProductListActivity"/>
         <activity android:name=".ui.productdetails.ProductDetailsActivity"/>
@@ -30,6 +30,13 @@
         <activity android:name=".ui.search.SearchActivity"/>
         <activity android:name=".ui.account.EditProfileActivity"/>
         <activity android:name=".ui.account.ChangePasswordActivity"/>
+        <activity android:name=".ui.admin.AdminDashboardActivity"/>
+        <activity android:name=".ui.admin.AdminLoginActivity"/>
+        <activity android:name=".ui.admin.ManageProductsActivity"/>
+        <activity android:name=".ui.admin.ManageOrdersActivity"/>
+        <activity android:name=".ui.admin.ManageUsersActivity"/>
+        <activity android:name=".ui.admin.AnalyticsDashboardActivity"/>
+        <activity android:name=".ui.payment.MembershipPaymentActivity"/>
 
     </application>
 

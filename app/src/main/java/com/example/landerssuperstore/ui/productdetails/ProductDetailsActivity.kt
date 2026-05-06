@@ -24,7 +24,10 @@ class ProductDetailsActivity : AppCompatActivity() {
             return
         }
 
-        binding.textEmoji.setImageResource(product.imageRes)
+        val resourceId = resources.getIdentifier(product.imageRes, "drawable", packageName)
+        if (resourceId != 0) {
+            binding.textEmoji.setImageResource(resourceId)
+        }
         binding.textName.text = product.name
         binding.textPrice.text = "₱%,.2f".format(product.price)
         if (product.originalPrice != null) {

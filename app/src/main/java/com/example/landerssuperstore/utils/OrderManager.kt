@@ -20,7 +20,7 @@ object OrderManager {
             items = items.toList(),
             total = total,
             date = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date()),
-            status = "To Ship"
+            status = "Pending"
         )
         currentList.add(0, order)
         _orders.value = currentList
@@ -29,5 +29,14 @@ object OrderManager {
     fun getOrdersByStatus(status: String): List<Order> {
         val list = _orders.value ?: mutableListOf()
         return if (status == "All") list else list.filter { it.status == status }
+    }
+
+    fun updateOrderStatus(orderId: String, newStatus: String) {
+        val currentList = _orders.value ?: mutableListOf()
+        val order = currentList.find { it.id == orderId }
+        if (order != null) {
+            order.status = newStatus
+            _orders.value = currentList
+        }
     }
 }

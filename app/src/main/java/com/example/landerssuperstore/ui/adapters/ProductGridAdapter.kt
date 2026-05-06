@@ -27,7 +27,10 @@ class ProductGridAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product) {
-            binding.textEmoji.setImageResource(product.imageRes)
+            val resourceId = binding.root.context.resources.getIdentifier(product.imageRes, "drawable", binding.root.context.packageName)
+            if (resourceId != 0) {
+                binding.textEmoji.setImageResource(resourceId)
+            }
             binding.textProductName.text = product.name
             binding.textPrice.text = "₱%,.2f".format(product.price)
             if (product.originalPrice != null) {
