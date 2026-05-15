@@ -17,6 +17,7 @@ import com.example.landerssuperstore.utils.MembershipManager
 import com.example.landerssuperstore.utils.AddressManager
 import com.example.landerssuperstore.utils.BranchManager
 import com.example.landerssuperstore.data.model.Voucher
+import com.example.landerssuperstore.data.repository.OrderRepository
 import com.example.landerssuperstore.data.repository.VoucherRepository
 
 class CartActivity : AppCompatActivity() {
@@ -181,7 +182,7 @@ class CartActivity : AppCompatActivity() {
         val branch = BranchManager.selectedBranch.value?.name ?: "Landers Otis"
         val address = if (deliveryMethod == "Pickup") "Pickup at $branch" else AddressManager.getAddress() ?: ""
 
-        OrderManager.addOrder(
+        OrderRepository.placeOrder(
             items = items.toList(),
             subtotal = subtotal,
             deliveryFee = deliveryFee,
@@ -192,11 +193,15 @@ class CartActivity : AppCompatActivity() {
             branchName = branch,
             address = address,
             voucherCode = appliedVoucher?.code
-        )
-        
-        Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_LONG).show()
-        CartManager.clearCart()
-        finish()
+        ) { success ->
+            if (success) {
+                Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_LONG).show()
+                CartManager.clearCart()
+                finish()
+            } else {
+                Toast.makeText(this, "Failed to place order. Try again.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun updateMembershipStatus() {

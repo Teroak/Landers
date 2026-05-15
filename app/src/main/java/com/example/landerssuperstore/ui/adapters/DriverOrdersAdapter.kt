@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.landerssuperstore.data.model.Order
-import com.example.landerssuperstore.databinding.ItemManageOrderBinding
+import com.example.landerssuperstore.databinding.ItemDriverOrderBinding
 
-class ManageOrdersAdapter(
+class DriverOrdersAdapter(
     private var orders: List<Order>,
-    private val onUpdateStatus: (Order) -> Unit,
-    private val onAssignDriver: (Order) -> Unit
-) : RecyclerView.Adapter<ManageOrdersAdapter.OrderViewHolder>() {
+    private val onUpdateStatus: (Order, String) -> Unit
+) : RecyclerView.Adapter<DriverOrdersAdapter.OrderViewHolder>() {
 
     fun updateList(newOrders: List<Order>) {
         orders = newOrders
@@ -18,7 +17,7 @@ class ManageOrdersAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
-        val binding = ItemManageOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemDriverOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return OrderViewHolder(binding)
     }
 
@@ -28,22 +27,20 @@ class ManageOrdersAdapter(
 
     override fun getItemCount(): Int = orders.size
 
-    inner class OrderViewHolder(private val binding: ItemManageOrderBinding) :
+    inner class OrderViewHolder(private val binding: ItemDriverOrderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(order: Order) {
             binding.textOrderId.text = "Order #${order.id.takeLast(6)}"
-            binding.textDate.text = order.date
             binding.textStatus.text = order.status
-            binding.textTotal.text = "Total: ₱%,.2f".format(order.total)
-            binding.textDriverName.text = "Driver: ${order.assignedRider ?: "Not Assigned"}"
+            binding.textAddress.text = order.deliveryAddress
             
-            binding.buttonUpdateStatus.setOnClickListener {
-                onUpdateStatus(order)
+            binding.buttonOutForDelivery.setOnClickListener {
+                onUpdateStatus(order, "Out for Delivery")
             }
 
-            binding.buttonAssignDriver.setOnClickListener {
-                onAssignDriver(order)
+            binding.buttonDelivered.setOnClickListener {
+                onUpdateStatus(order, "Delivered")
             }
         }
     }

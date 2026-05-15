@@ -16,6 +16,11 @@ import com.example.landerssuperstore.databinding.FragmentAccountBinding
 import com.example.landerssuperstore.ui.login.LoginActivity
 import com.example.landerssuperstore.utils.MembershipManager
 import com.example.landerssuperstore.utils.AddressManager
+import com.example.landerssuperstore.data.repository.MemberRepository
+import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AccountFragment : Fragment() {
 
@@ -53,9 +58,10 @@ class AccountFragment : Fragment() {
         binding.textProfileEmail.text = userEmail
 
         // Update membership status indicator
-        updateMembershipStatus()
+        fetchRealMemberData()
 
         binding.buttonLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
             val intent = Intent(requireContext(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -90,18 +96,43 @@ class AccountFragment : Fragment() {
         }
     }
 
-    private fun updateMembershipStatus() {
-        val isMember = MembershipManager.isUserMember()
-        
-        // Update the membership row text and icon
-        if (isMember) {
-            binding.rowMembership.text = "&#127909; My Membership (Active)"
-            // Add visual indicator - could be a badge or different color
-            binding.rowMembership.setTextColor(getColorFromResource(com.example.landerssuperstore.R.color.primary))
-        } else {
-            binding.rowMembership.text = "&#127909; Join Membership"
-            binding.rowMembership.setTextColor(getColorFromResource(com.example.landerssuperstore.R.color.text_primary))
+    private fun fetchRealMemberData() {
+        MemberRepository.getMemberData { data ->
+            if (data != null) {
+                val firstName = data["Mem_FirstName"] as? String ?: userName
+                val lastName = data["Mem_LastName"] as? String ?: ""
+                val email = data["Mem_Email"] as? String ?: userEmail
+                val type = data["Mem_Type"] as? String ?: "Premium"
+                val status = data["Mem_Status"] as? String ?: "Active"
+                
+                // Firestore Timestamp handling (simplified for this example)
+                val expiryDate = data["Mem_ExpiryDate"] as? com.google.firebase.Timestamp
+                val expiryStr = if (expiryDate != null) {
+                    SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(expiryDate.toDate())
+                } else {
+                    "N/A"
+                }
+
+                activity?.runOnUiThread {
+                    binding.textProfileName.text = "$firstName $lastName"
+                    binding.textProfileEmail.text = email
+                    
+                    if (status == "Active") {
+                        binding.rowMembership.text = "Membership: $type (Expires: $expiryStr)"
+                        binding.rowMembership.setTextColor(getColorFromResource(com.example.landerssuperstore.R.color.primary))
+                        MembershipManager.setMembershipStatus(true)
+                    } else {
+                        binding.rowMembership.text = "Membership: $status"
+                        binding.rowMembership.setTextColor(getColorFromResource(com.example.landerssuperstore.R.color.text_primary))
+                        MembershipManager.setMembershipStatus(false)
+                    }
+                }
+            }
         }
+    }
+
+    private fun updateMembershipStatus() {
+        // Kept for backward compatibility but replaced by fetchRealMemberData
     }
 
     private fun showAddressDialog() {

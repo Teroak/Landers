@@ -14,4 +14,13 @@ object MembershipManager {
     fun isUserMember(): Boolean {
         return _isMember.value ?: false
     }
+
+    fun updateFromFirestore() {
+        com.example.landerssuperstore.data.repository.MemberRepository.getMemberData { data ->
+            if (data != null) {
+                val status = data["Mem_Status"] as? String ?: "Inactive"
+                _isMember.postValue(status == "Active")
+            }
+        }
+    }
 }

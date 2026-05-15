@@ -33,6 +33,7 @@
         <activity android:name=".ui.account.ChangePasswordActivity"/>
         <activity android:name=".ui.admin.AdminDashboardActivity"/>
         <activity android:name=".ui.admin.AdminLoginActivity"/>
+        <activity android:name=".ui.admin.DriverDashboardActivity"/>
         <activity android:name=".ui.admin.ManageProductsActivity"/>
         <activity android:name=".ui.admin.ManageOrdersActivity"/>
         <activity android:name=".ui.admin.ManageUsersActivity"/>

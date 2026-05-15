@@ -54,15 +54,14 @@ class MainActivity : AppCompatActivity() {
         }
         
         // Update membership status in bottom navigation
-        updateMembershipStatus()
-    }
-
-    private fun updateMembershipStatus() {
-        val isMember = MembershipManager.isUserMember()
-        
-        if (isMember) {
-            // Update bottom navigation item text or icon
-            // For now, we'll just ensure the correct fragment is loaded
+        MembershipManager.updateFromFirestore()
+        MembershipManager.isMember.observe(this) { isMember ->
+            if (isMember) {
+                // Change "Be a Member" to "My Membership" or similar
+                val menu = binding.bottomNavigation.menu
+                val membershipItem = menu.findItem(R.id.nav_bea_member)
+                membershipItem?.title = "Member"
+            }
         }
     }
 }

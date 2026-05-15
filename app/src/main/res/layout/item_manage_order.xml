@@ -69,10 +69,32 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update Status"
+            android:text="Status"
             android:textColor="@color/primary"
+            android:textSize="@dimen/text_small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <Button
+            android:id="@+id/buttonAssignDriver"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assign Driver"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toStartOf="@id/buttonUpdateStatus"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <TextView
+            android:id="@+id/textDriverName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Driver: Not Assigned"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintTop_toBottomOf="@id/buttonAssignDriver"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
