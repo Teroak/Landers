@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "603136745112",
+    "project_id": "landersonline-bcf20",
+    "storage_bucket": "landersonline-bcf20.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603136745112:android:9d17af527335f037c27aed",
+        "android_client_info": {
+          "package_name": "com.example.landerssuperstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAHP3Fssy_LekHV24WQo2yX1cClZiD8pY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
