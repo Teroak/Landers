@@ -16,15 +16,22 @@ class ManageOrdersActivity : AppCompatActivity() {
     private lateinit var binding: ActivityManageOrdersBinding
     private lateinit var adapter: ManageOrdersAdapter
 
+    private var ordersListener: com.google.firebase.firestore.ListenerRegistration? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityManageOrdersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupRecyclerView()
-        fetchOrders()
+        startObservingOrders()
         
         binding.buttonBack.setOnClickListener { finish() }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ordersListener?.remove()
     }
 
     private fun setupRecyclerView() {
@@ -37,17 +44,25 @@ class ManageOrdersActivity : AppCompatActivity() {
         binding.recyclerOrders.adapter = adapter
     }
 
-    private fun fetchOrders() {
-        OrderRepository.getAllOrders { ordersMapList ->
+    private fun startObservingOrders() {
+        ordersListener = OrderRepository.observeAllOrders { ordersMapList ->
             val orders = ordersMapList.map { map ->
+                val dateStr = try {
+                    val timestamp = map["Order_Date"] as? com.google.firebase.Timestamp
+                    if (timestamp != null) {
+                        val sdf = java.text.SimpleDateFormat("MMM dd, yyyy HH:mm", java.util.Locale.getDefault())
+                        sdf.format(timestamp.toDate())
+                    } else ""
+                } catch (e: Exception) { "" }
+
                 Order(
                     id = map["Order_ID"] as? String ?: "",
                     items = emptyList(), // Simplified for now
-                    subtotal = (map["Order_TotalAmount"] as? Number)?.toDouble() ?: 0.0,
+                    subtotal = (map["Order_Subtotal"] as? Number)?.toDouble() ?: (map["Order_TotalAmount"] as? Number)?.toDouble() ?: 0.0,
                     deliveryFee = (map["Order_DeliveryFee"] as? Number)?.toDouble() ?: 0.0,
-                    discountAmount = 0.0,
+                    discountAmount = (map["Order_DiscountAmount"] as? Number)?.toDouble() ?: 0.0,
                     total = (map["Order_TotalAmount"] as? Number)?.toDouble() ?: 0.0,
-                    date = "", // Simplified
+                    date = dateStr,
                     status = map["Order_Status"] as? String ?: "Pending",
                     paymentMethod = map["Order_PaymentMethod"] as? String ?: "Cash",
                     deliveryMethod = map["Order_DeliveryMethod"] as? String ?: "Standard",
@@ -70,14 +85,14 @@ class ManageOrdersActivity : AppCompatActivity() {
         builder.setTitle("Update Order Status")
         builder.setSingleChoiceItems(statuses, currentSelection) { dialog, which ->
             val newStatus = statuses[which]
-            OrderRepository.updateOrderStatus(order.id, newStatus) { success ->
-                if (success) {
-                    Toast.makeText(this, "Order status updated to $newStatus", Toast.LENGTH_SHORT).show()
-                    fetchOrders()
-                } else {
-                    Toast.makeText(this, "Failed to update status", Toast.LENGTH_SHORT).show()
-                }
-            }
+                    OrderRepository.updateOrderStatus(order.id, newStatus) { success ->
+                        if (success) {
+                            Toast.makeText(this, "Order status updated to $newStatus", Toast.LENGTH_SHORT).show()
+                            // No need to manually refresh, the listener will handle it
+                        } else {
+                            Toast.makeText(this, "Failed to update status", Toast.LENGTH_SHORT).show()
+                        }
+                    }
             dialog.dismiss()
         }
         builder.setNegativeButton("Cancel") { dialog, _ ->
@@ -104,7 +119,7 @@ class ManageOrdersActivity : AppCompatActivity() {
                 OrderRepository.assignDriver(order.id, selectedDriverId, selectedDriverName) { success ->
                     if (success) {
                         Toast.makeText(this, "Driver assigned: $selectedDriverName", Toast.LENGTH_SHORT).show()
-                        fetchOrders()
+                        // No need to manually refresh, the listener will handle it
                     } else {
                         Toast.makeText(this, "Failed to assign driver", Toast.LENGTH_SHORT).show()
                     }

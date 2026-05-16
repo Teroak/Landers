@@ -55,6 +55,12 @@ class MainActivity : AppCompatActivity() {
         
         // Update membership status in bottom navigation
         MembershipManager.updateFromFirestore()
+        
+        // One-time database seeding for demo purposes
+        // com.example.landerssuperstore.utils.FirebaseInitializer.seedDatabase { success ->
+        //     if (success) android.util.Log.d("MainActivity", "Seeded products")
+        // }
+
         MembershipManager.isMember.observe(this) { isMember ->
             if (isMember) {
                 // Change "Be a Member" to "My Membership" or similar
