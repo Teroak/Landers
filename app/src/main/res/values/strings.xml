@@ -54,4 +54,11 @@
     <string name="terms_agree">I agree to the Terms and Conditions</string>
     <string name="search_results">Search Results</string>
     <string name="no_results">No products found</string>
+    <string name="out_for_delivery">Out for Delivery</string>
+    <string name="delivered">Delivered</string>
+    <string name="order_prefix">Order #%1$s</string>
+    <string name="status">Status</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="driver_dashboard">Driver Dashboard</string>
+    <string name="welcome_driver">Welcome, %1$s</string>
 </resources>

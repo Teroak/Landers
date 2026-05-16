@@ -31,7 +31,8 @@ class DriverOrdersAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(order: Order) {
-            binding.textOrderId.text = "Order #${order.id.takeLast(6)}"
+            val context = binding.root.context
+            binding.textOrderId.text = context.getString(com.example.landerssuperstore.R.string.order_prefix, order.id.takeLast(6))
             binding.textStatus.text = order.status
             binding.textAddress.text = order.deliveryAddress
             
